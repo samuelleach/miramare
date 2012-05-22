@@ -1,0 +1,20 @@
+----------------
+Running miramare
+----------------
+
+1) Download the dust template by running:
+
+bash getTestData.sh
+
+2) Run the component separation pipeline. e.g.
+
+./run_compsep parfiles/testsim_perturb.par
+
+3) Once the pipeline is run, components are found in the output/
+directory. The foreground parameter likelihoods can be inspected by
+running:
+
+sm < output/testsim_perturb.sm
+gv output/testsim_perturb.ps
+
+or using by matlab to run the output/*.m scripts.

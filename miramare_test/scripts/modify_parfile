@@ -1,0 +1,50 @@
+#!/bin/tcsh
+# This script is written by Ludo Waerbeke here and downloaded from
+# http://cosmologist.info/utils/cambmenu.scr
+#
+# Syntax:
+#
+# modify_parfile -f template.par -out modified_template.par "-name" newvalue
+
+
+@ imax=${#argv}
+@ i=1
+while ($i <= ${#argv})
+  @ ip = $i + 1
+  if($i <= ${#argv}) then
+    if ("$argv[$i]" =~ "-f") then
+      set FILENAME="$argv[$ip]"
+    endif
+    if ("$argv[$i]" =~ "-out") then
+      set FILEOUT="$argv[$ip]"
+    endif
+  endif
+  @ i = $i + 1
+end
+
+
+@ iread=1
+if (-f $FILENAME ) then
+#  cp ./$FILENAME ./$FILENAME.in
+  cp ./$FILENAME ./$FILENAME.$$.in
+  while ($iread <= $imax)
+    if ("$argv[$iread]" != "-f" && "$argv[$iread]" != "-out") then
+      @ ip = $iread + 1
+
+#      awk '{if("'`echo $argv[$iread] | awk -F- '{print $2}'`'" == $1 && substr($0,1,1) != "#") print substr($0,1,match($0,"=")), "'$argv[$ip]'"; else print $0}'< ./$FILENAME.in > ./$FILENAME.out
+#      mv ./$FILENAME.out ./$FILENAME.in
+      awk '{if("'`echo $argv[$iread] | awk -F- '{print $2}'`'" == $1 && substr($0,1,1) != "#") print substr($0,1,match($0,"=")), "'$argv[$ip]'"; else print $0}'< ./$FILENAME.$$.in > ./$FILENAME.$$.out
+      mv ./$FILENAME.$$.out ./$FILENAME.$$.in
+
+    endif
+    @ iread = $iread + 2
+  end
+#  mv ./$FILENAME.in $FILEOUT
+  mv ./$FILENAME.$$.in $FILEOUT
+  exit
+endif
+
+echo ""
+echo "File $FILENAME does not exist or output file not defined"
+
+

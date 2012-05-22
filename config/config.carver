@@ -1,0 +1,97 @@
+# Config file for bassi.nersc.gov, using XL compilers,
+# ESSL for blas/lapack, and CFITSIO from the cmb 
+# modules.  Load the cmb module before building...
+
+
+# =============== Installation ===================
+
+# Final install location.  This defaults to a
+# subdirectory of the top-level directory called
+# install_$COMMANDER.
+#export INSTALL := /usr/local
+
+
+# =============== System Tools ===================
+
+# The defaults should be fine for any normal
+# GNU/Linux operating system...
+
+# Here you can override the make version to use
+export MAKE := gmake
+
+# How to make a tar.gz file
+export CTAR := gtar czvf
+
+# The archive command
+export AR := ar
+
+# Archive options to create a library
+export ARFLAGS := crv
+
+# The ranlib command
+export RANLIB := ranlib
+
+
+# ================= Compilers ====================
+
+# Serial Fortran 90 compiler.  Default is "f90".
+export F90 := $(shell cmbconfig --comp --lang MPIF90)
+
+# MPI Fortran 90 compiler.  Default is "mpif90".
+export MPF90 := $(shell cmbconfig --comp --lang MPIF90)
+
+# MPI Fortran 77 compiler.  Default is "mpif77".
+export MPF77 := $(shell cmbconfig --comp --lang MPIF90)
+
+# MPI C compiler.  Default is "mpicc".
+export MPCC := $(shell cmbconfig --comp --lang MPIC)
+
+
+# =========== Compiler Optimizations =============
+
+# Fortran 90 compiler flags
+export F90FLAGS :=  -DESCAPEBACKSLASH -pg
+#-D__GFORTRAN__
+#-qsuffix=f=f90 -qsuffix=cpp=F90 -q64 -O3 -qstrict -blpdata -qarch=auto -qtune=auto -WF,-DIBMXL
+
+# Fortran 77 compiler flags
+export FFLAGS :=
+#-q64 -O3 -blpdata -qarch=auto -qtune=auto
+
+# C compiler flags.
+export CFLAGS :=
+#-q64 -O3 -blpdata -qarch=auto -qtune=aut
+
+# Extra flags used for linking
+export LDFLAGS := 
+
+# ============== Fortran Features ================
+
+# Set this variable to 1 if the fortran compiler
+# produces module files with capitalization (*.MOD)
+# instead of lowercase (*.mod).
+#export FORTRAN_UPPER := 1
+
+
+# =============== CFITSIO Linking ================
+
+# The include and linking commands for cfitsio.
+export CFITSIO_INCLUDE := $(shell cmbconfig --lang MPIF90 --incl cfitsio)
+export CFITSIO_LINK := $(shell cmbconfig --lang MPIF90 --lflags --libs cfitsio)
+
+
+# =============== LAPACK Linking =================
+
+# The include and linking commands for LAPACK.
+export LAPACK_INCLUDE := $(shell cmbconfig --lang MPIF90 --incl lapack)
+export LAPACK_LINK := $(shell cmbconfig --lang MPIF90 --lflags --libs lapack)
+#$(LAPACK) -lessl_r
+
+
+# =============== HEALPIX Linking =================
+
+# The include and linking commands for HEALPIX.
+#export HEALPIX_INCLUDE := -I/project/projectdirs/cmb/modules/carver/pgi/cmb/2.4.2/cfitsio_3.0.6-2.4.2/include -I/project/projectdirs/cmb/modules/carver/pgi/cmb/2.4.2/healpix_2.11c_20090219-2.4.2/include 
+#export HEALPIX_LINK := -L/project/projectdirs/cmb/modules/carver/pgi/cmb/2.4.2/cfitsio_3.0.6-2.4.2/lib -L/project/projectdirs/cmb/modules/carver/pgi/cmb/2.4.2/healpix_2.11c_20090219-2.4.2/lib -lhealpix -lcfitsio -mp -lm
+export HEALPIX_INCLUDE := $(shell cmbconfig --lang MPIF90 --incl healpix)
+export HEALPIX_LINK := $(shell cmbconfig --lang MPIF90 --lflags --libs healpix)

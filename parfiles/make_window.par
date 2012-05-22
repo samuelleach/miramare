@@ -1,0 +1,12 @@
+#Example parameter file for make_window
+
+input_fwhm_arcmin =  30.
+input_beam_file = 
+
+nside=512
+target_fwhm_arcmin = 60.
+signal_beam_file = data/sigbeam.txt
+variance_beam_file = data/varbeam.txt
+inversevariance_beam_file = data/invvarbeam.txt
+
+verbose = T

@@ -1,0 +1,378 @@
+# File root determines names of output files
+file_root=testsim2noB
+
+samples=2000
+
+noise_rand_seed= 100
+signal_rand_seed= 1000
+caliberror_rand_seed= 10000
+
+do_compsep_on_simulated_component = -1
+
+modulo_npix=1
+
+sim_lmax = 1024
+sim_signal = T
+sim_noise = T
+sim_caliberror = F
+sim_suppress_bmode = T
+cls_file= ./cl/WMAP5_LCDM_lensedCls.dat
+
+sim_component = T
+sim_ncomponent = 1
+sim_component(1) = greybody
+sim_component1_param(1) = 1.65
+sim_component1_param(2) = 18.
+sim_componentfile(1) = ./data/dust_carlo_150ghz_512.fits
+sim_component_frequency(1) = 150
+
+sim_component_perturbations = F
+component_rand_seed = 20000
+sim_component1_cls_file_param(1)= ./cl/beta.dat
+sim_component1_cls_file_param(2)= ./cl/T.dat
+
+mcmc_rand_seed= 1
+out_dir = output
+
+ 
+
+# Foreground parameter ranges
+param1 = 1.65  0 4 0.002 0.002 1.6 0.0
+param2 = 18  18 18 0.1 0.1 18 0.0
+# Calibration parameter ranges
+param3 = 1  0.5 1.5 0.01 0.01 1 0.0
+param4 = 1  0.5 1.5 0.01 0.01 1 0.0
+param5 = 1  0.5 1.5 0.01 0.01 1 0.0
+
+# Offset and calibration parameters for on the fly reprocessing of input data
+offset(1)=0
+offset(2)=0
+offset(3)=0
+calib(1)=1.
+calib(2)=1.
+calib(3)=1.
+#RMS error of absolute calibration at each channel
+calib_rms(1)=0.02
+calib_rms(2)=0.02
+calib_rms(3)=0.02
+
+calibration_marginalisation= F
+offset_marginalisation= F
+
+
+
+noise_matrix_correction = T
+
+
+
+fwhm_arcmin(1)=8
+fwhm_arcmin(2)=8
+fwhm_arcmin(3)=8
+
+
+
+##################################################################################
+# Parameters common to estspec, getdist and estamp
+##################################################################################
+
+cachedir= ./cache/
+
+#Defines which pixels for spectral index estimation using a mask
+maskfile= ./mask/square_mask_ra92.0000_decm45_512.fits
+
+regionfile=
+
+#Defines model for fitting
+ncomponent = 2
+component(1) = cmb
+component(2)= greybody
+
+ntemplate = 0
+templatefile(1) = ./data/dust_carlo_150ghz_512.fits 
+template1_coefficient(1) = 1.
+template1_coefficient(2) = 2.00539
+template1_coefficient(3) = 3.56039
+
+#ntemplate = 3
+#templatefile(1) = ./data/dust_psm_150ghz.fits 
+#templatefile(1) = ./data/dust_psm_250ghz.fits 
+#templatefile(1) = ./data/dust_psm_410ghz.fits 
+#template1_coefficient(1) = 1.
+#template2_coefficient(2) = 1.
+#template3_coefficient(3) = 1.
+#template1_coefficient(2) = 0.
+#template1_coefficient(3) = 0.
+#template2_coefficient(1) = 0.
+#template2_coefficient(3) = 0.
+#template3_coefficient(1) = 0.
+#template3_coefficient(2) = 0.
+
+
+#Set this to I, QU, or IQU.
+# "I" can be used on
+stokes = QU
+
+nchannel = 3
+
+
+datafile(1) =
+datafile(2) =
+datafile(3) =
+
+
+#Homogeneous noise case
+weight_format= 4
+#NSIDE=1024
+#stokesqu_noise_sig0(1)= 0.21
+#stokesqu_noise_sig0(2)= 0.27
+#stokesqu_noise_sig0(3)= 0.37
+#stokesi_noise_sig0(1)= 0.15
+#stokesi_noise_sig0(2)= 0.19
+#stokesi_noise_sig0(3)= 0.26
+
+#NSIDE=512
+stokesqu_noise_sig0(1)= 0.42
+stokesqu_noise_sig0(2)= 0.53
+stokesqu_noise_sig0(3)= 0.74
+stokesi_noise_sig0(1)= 0.30
+stokesi_noise_sig0(2)= 0.37
+stokesi_noise_sig0(3)= 0.52
+
+frequency(1) = 150.
+frequency(2) = 250.
+frequency(3) = 410.
+
+tophatmin_frequency(1) = 133
+tophatmax_frequency(1) = 173
+
+tophatmin_frequency(2) = 217
+tophatmax_frequency(2) = 288
+
+tophatmin_frequency(3) = 360
+tophatmax_frequency(3) = 450
+
+##################################################################################
+# Parameters for estspec (MCMC)
+##################################################################################
+
+#action = 0:  MCMC, action=1: postprocess .data file, action=2: find best fit point only
+action = 0
+
+
+#Feedback level ( 2=lots,1=chatty,0=none)
+feedback = 3
+
+#Temperature at which to Monte-Carlo
+temperature = 1
+
+#1: Simple Metropolis, 2: slice sampling, 3: slice sampling fast parameters, 4: directional gridding
+sampling_method = 1
+
+#if sampling_method =4, iterations per gridded direction
+directional_grid_steps = 40
+
+ 
+
+
+#Can use covariance matrix for proposal density, otherwise use settings below
+#Covariance matrix can be produced using "getdist" program.
+propose_matrix = 
+
+#If propose_matrix is blank (first run), can try to use numerical Hessian to 
+#estimate a good propose matrix. As a byproduct you also get an approx best fit point
+estimate_propose_matrix = T
+
+#Tolerance on log likelihood to use when estimating best fit point
+delta_loglike = 10
+
+#Scale of proposal relative to covariance; 2.4 is recommended by astro-ph/0405462 for Gaussians
+#If propose_matrix is much broader than the new distribution, make proportionately smaller
+#Generally make smaller if your acceptance rate is too low
+propose_scale = 2.4
+
+
+
+
+
+
+#if non-zero number of steps between sample info dumped to file file_root.data
+#indep_sample = 
+indep_sample = 1
+
+#number of samples to disgard at start; usually set to zero and remove later
+burn_in = 0
+
+#If zero set automatically
+num_threads = 0
+
+#MPI mode multi-chain options (recommended)
+#MPI_Converge_Stop is a (variance of chain means)/(mean of variances) parameter that can be used to stop the chains
+#Set to a negative number not to use this feature. Does not guarantee good accuracy of confidence limits.
+MPI_Converge_Stop = 0.01
+
+#Do initial period of slice sampling; may be good idea if 
+#cov matrix or widths are likely to be very poor estimates
+MPI_StartSliceSampling  = F
+
+#Can optionally also check for convergence of confidence limits (after MPI_Converge_Stop reached)
+#Can be good idea as small value of MPI_Converge_Stop does not (necessarily) imply good exploration of tails
+MPI_Check_Limit_Converge = T
+
+#if MPI_Check_Limit_Converge = T, give tail fraction to check (checks both tails):
+MPI_Limit_Converge = 0.008
+#permitted quantile chain variance in units of the standard deviation (small values v slow):
+MPI_Limit_Converge_Err = 0.1
+#which parameter's tails to check. If zero, check all parameters:
+MPI_Limit_Param = 0
+
+#if MPI_LearnPropose = T, the proposal density is continally updated from the covariance of samples so far (since burn in)
+#MPI_LearnPropose = F
+MPI_LearnPropose  = T
+#can set a value of converge at which to stop updating covariance (so that it becomes rigorously Markovian)
+#e.g. MPI_R_StopProposeUpdate = 0.4 will stop updating when (variance of chain means)/(mean of variances) < 0.4
+MPI_R_StopProposeUpdate = 0.4
+
+#If have covmat, R to reach before updating proposal density (increase if covmat likely to be poor)
+#Only used if not varying new parameters that are fixed in covmat
+MPI_Max_R_ProposeUpdate =
+#MPI_Max_R_ProposeUpdate = 2
+#As above, but used if varying new parameters that were fixed in covmat
+MPI_Max_R_ProposeUpdateNew = 
+#MPI_Max_R_ProposeUpdateNew = 30
+
+
+##################################################################################
+# Parameters for getdist 
+##################################################################################
+#cov_matrix_dimension=-1
+#Params for "getdist" - for processing .txt chain information
+
+#if zero, columnnum calculated automatically as total number of columns
+columnnum = 0
+out_root = 
+plot_data_dir = 
+
+#If generated chain at higher temperature can cool for computing results
+cool = 1
+
+#If 0 assume 1 and no chain filename prefixes
+chain_num = 0
+first_chain = 
+exclude_chain = 
+
+#width of Gaussian smoothing - Should check plots are robust to changes in 
+#this parameter. Narrow diagonal distributions need larger number
+#Can also check plots by comparing with setting smoothing=F below
+num_bins = 20
+
+#For disgarding burn-in if using raw chains
+#if < 1 interpreted as a fraction of the total number of rows (0.3 ignores first 30% of lines)
+ignore_rows = 0.1
+
+#if T produced B&W printer friendly output
+B&W = F
+#version of MatLab you are using
+matlab_version = 7.4
+
+#Switches; auto_label labels all parameters by their number
+no_plots = F
+#no_tests = F
+no_tests = T
+auto_label = T
+#samples_are_chains = F can be useful for other samples when first two columns not present
+samples_are_chains = T
+
+#Include these in 1D plots for comparison - must have same parameters
+compare_num = 0
+compare1 = beta_i_offsetmarg
+
+#compare1 = calib_i
+#compare2 = beta_i_remoffset
+#compare3 = beta_i_nooffsetmarg
+
+plot_meanlikes = F
+shade_meanlikes = T
+
+# if non-zero, output _thin file, thinned by thin_factor
+thin_factor = 0
+#Do probabilistic importance sampling to single samples
+make_single_samples = F
+single_thin = 4
+
+#Do simple importance sampling
+adjust_priors = F
+#Map parameters to other derived quantities
+map_params = F
+
+#Use a Gaussian smoothing with width of the bin size
+#Otherwise use top hat bins
+#smoothing = T
+smoothing = F
+
+contour1 = 0.68
+contour2 = 0.95
+
+#if we only want 2D plots agains a particular variable
+plot_2D_param = 
+
+#if above zero, instead plot just these combinations:
+#if both zero it will plot most correlated variables
+plot_2D_num = 1
+plot1 = 1 29
+plot2 = 2 3
+plot3 = 3 1
+
+#number of sample plots, colored by third parameter
+#if last parameter is 0 or -1 colored by the parameter most correlated
+#with one of the eigenvector directions (e.g. parallel or orthogonal to degeneracy)
+num_3D_plots = 1
+#3D_plot1 = 1 29 57
+
+#Output 2D plots for param combos with 1D marginalized plots along the diagonal
+triangle_plot = F
+
+#Number of parameters to get covariance matrix for 
+#If you are going to use the output as a proposal density make sure
+#you have map_params = F, and the dimension equal to the number of MCMC parameters
+#cov_matrix_dimension = 70
+#cov_matrix_dimension = 75
+
+#e.g. colormap('jet')
+matlab_colscheme =
+
+#Parameters to use. If zero use all parameters which have lables.
+plotparams_num = 0
+plotparams = 1 2 3
+
+#labels for the parameters
+lab1 = slope index, \beta
+lab2 = \omega (150GHz) 
+lab3 = \omega (250GHz) 
+lab4 = \omega (410GHz) 
+
+
+#Need to give limits if prior cuts off distribution where not very small
+#limits1= 1.5 1.9
+#limits2 = 0.01 N
+
+#all_limits sets all limitsxx for all variables to the same; can be useful for bins
+all_limits = 
+
+#compute two-tail marginalized limits irrespective of limits settings above
+#(otherwise limits are two-tail only for those parameters without limits)
+force_twotail = F
+
+#PCA - analysis output in file file_root.PCA
+#number of parameter to do PCA for
+PCA_num = 0
+PCA_normparam = 13
+#The parameters to use
+PCA_params = 3 13 16
+#L for log(x), M for log(-x), N for no log
+PCA_func   = LLLL
+
+plot_param_values = T
+value_param1 = 1.65
+value_param2 = 1
+value_param3 = 1
+value_param4 = 1

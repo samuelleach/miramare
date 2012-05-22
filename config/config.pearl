@@ -1,0 +1,105 @@
+# Config file for a generic GCC based compile,
+# Using the reference LAPACK/Blas and assuming
+# both LAPACK and CFITSIO are in /usr/local.
+
+
+# =============== Installation ===================
+
+# Final install location.  This defaults to a
+# subdirectory of the top-level directory called
+# install_$COMMANDER.
+#export INSTALL := /usr/local
+
+
+# =============== System Tools ===================
+
+# The defaults should be fine for any normal
+# GNU/Linux operating system...
+
+# Here you can override the make version to use
+#export MAKE := gmake
+
+# How to make a tar.gz file
+#export CTAR := tar czvf
+
+# The archive command
+#export AR := ar
+
+# Archive options to create a library
+#export ARFLAGS := crv
+
+# The ranlib command
+export RANLIB := ranlib
+
+
+# ================= Compilers ====================
+
+# Serial Fortran 90 compiler.  Default is "f90".
+export F90 := mpiifort
+
+# MPI Fortran 90 compiler.  Default is "mpif90".
+export MPF90 := mpiifort -DMPI -DMPIPIX
+#-D__GFORTRAN__
+#-DOPENMP
+#-DSTAMINA
+
+# MPI Fortran 77 compiler.  Default is "mpif77".
+export MPF77 := mpif77
+
+# MPI C compiler.  Default is "mpicc".
+export MPCC := mpiicc
+
+
+# =========== Compiler Optimizations =============
+
+# Fortran 90 compiler flags
+export F90FLAGS := -Vaxlib  -ip -W0 -WB -fpp -cm -vec_report0 -traceback\
+        -warn all -DTHREEJ  -heap-arrays
+#-O3
+#-pg
+#-openmp
+
+# Fortran 77 compiler flags
+export FFLAGS :=
+
+# C compiler flags.
+export CFLAGS :=
+
+# Extra flags used for linking
+export LDFLAGS := 
+
+
+# ============== Fortran Features ================
+
+# Set this variable to 1 if the fortran compiler
+# produces module files with capitalization (*.MOD)
+# instead of lowercase (*.mod).
+#export FORTRAN_UPPER := 1
+
+
+# =============== CFITSIO Linking ================
+
+# The include and linking commands for cfitsio.
+export CFITSIO_INCLUDE := 
+export CFITSIO_LINK := -L/home/leach/cfitsio/lib -lcfitsio
+#-L/usr/lib/gcc/x86_64-redhat-linux/3.4.6/ -lg2c
+
+
+# =============== LAPACK Linking =================
+
+# The include and linking commands for LAPACK.
+export LAPACK_INCLUDE := 
+export LAPACK_LINK := -L/opt/intel/impi/3.2.2.006/lib64/ -lmpiif\
+       -L/opt/intel/mkl/10.2.3.029/lib/em64t/  -lmkl_lapack95_lp64 -lguide -lmkl_core\
+       -lmkl_solver_lp64 -lmkl_intel_thread\
+       -lmkl_gf_lp64 -lpthread -liomp5
+
+#mkl_lapack
+
+# =============== HEALPIX Linking =================
+
+# The include and linking commands for LAPACK.
+export HEALPIX_INCLUDE := -I/home/leach/healpix/Healpix_2.13a_intel/include
+export HEALPIX_LINK := -L/home/leach/healpix/Healpix_2.13a_intel/lib/ -lhealpix
+#export HEALPIX_INCLUDE := -I/home/leach/healpix/Healpix_2.20a/include
+#export HEALPIX_LINK := -L/home/leach/healpix/Healpix_2.20a/lib/ -lhealpix

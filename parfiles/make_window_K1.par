@@ -1,0 +1,12 @@
+#Example parameter file for make_window
+
+input_fwhm_arcmin =
+input_beam_file = data/wmap/wmap_ampl_bl_K1_7yr_v4.txt
+
+nside=512
+target_fwhm_arcmin = 60.
+signal_beam_file = data/wmap/sig60_wmap_K1_7yr_v4.txt
+variance_beam_file = data/wmap/var60_wmap_K1_7yr_v4.txt
+inversevariance_beam_file = data/wmap/invvar60_wmap_K1_7yr_v4.txt
+
+verbose = T

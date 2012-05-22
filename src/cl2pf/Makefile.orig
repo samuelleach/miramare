@@ -1,0 +1,7 @@
+CC = gcc
+
+cl2pf: cl2pf.c
+	$(CC) cl2pf.c -o cl2pf
+
+clean:
+	rm -f cl2pf

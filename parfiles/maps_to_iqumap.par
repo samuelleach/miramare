@@ -1,0 +1,7 @@
+verbose = T
+nmaps = 4
+infile(1) = output_150GHz_I.fits
+infile(2) = output_150GHz_Q.fits
+infile(3) = output_150GHz_U.fits
+infile(4) = hits_150GHz.fits  
+outfile = !output_150GHz.fits

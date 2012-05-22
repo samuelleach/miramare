@@ -1,0 +1,13 @@
+-------------------------- Messaggio originale ---------------------------
+Oggetto: Springtide matrix into madam format
+Da:      "Reijo Keskitalo" <reijo.keskitalo@helsinki.fi>
+Data:    Ven, 3 Ottobre 2008 10:38 am
+A:       sara.ricciardi@oapd.inaf.it
+--------------------------------------------------------------------------
+
+Hi,
+
+Attached is the small code I use to convert interlaced Springtide matrix
+into Madam block format. It requires cfitsio and Healpix to compile.
+
+-R

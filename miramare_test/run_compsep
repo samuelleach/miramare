@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Script to run miramare_estspec, miramare_getdist and
+# miramare_estamp in sequence.
+
+if [ "$1" == '' ]; then
+  echo "Usage : run_compsep parfile [noise_seed cmb_seed]"
+  exit
+else
+  PARFILE=$1
+  PARFILE_RUN=${PARFILE}
+fi
+
+#---------------------------------------------------
+# If desired, modify random seeds in paramater files
+#---------------------------------------------------
+if [ "$2" != '' ]; then
+  NOISE_SEED=$2
+  CMB_SEED=$3
+  PARFILE_NEW=${PARFILE}.seed_${NOISE_SEED}_${CMB_SEED}
+  ./scripts/modify_parfile -f ${PARFILE} -out ${PARFILE_NEW} "-noise_rand_seed" ${NOISE_SEED} "-signal_rand_seed" ${CMB_SEED} "-file_root" MC.seed_${NOISE_SEED}_${CMB_SEED} 
+  PARFILE_RUN=${PARFILE_NEW}
+fi
+
+
+mkdir -p cache cl data mask output parfiles weight
+
+#EXEC='mpirun -np 2'
+EXEC=''
+SUFFIX=''
+
+if [ ${MIRAMARE} == bassi ]; then
+  EXEC='poe'
+  SUFFIX='-procs 2 -nodes 1'
+fi
+if [ ${MIRAMARE} == franklin ]; then
+# Need to run an interactive job with 'qsub -I -V -q interactive -l mppwidth=1 -l mppnppn=1'
+  EXEC='' #'aprun -n 1'
+  SUFFIX=''
+fi
+
+#------------------------------
+#Spectral index estimation code
+#------------------------------
+${EXEC} miramare_estspec ${PARFILE_RUN} ${SUFFIX}
+
+#--------------------------------
+#Get distribution of MCMC samples
+#--------------------------------
+miramare_getdist ${PARFILE_RUN}
+
+#----------------------------
+#Perform component separation
+#----------------------------
+${EXEC} miramare_estamp ${PARFILE_RUN} ${SUFFIX}
+
+#---------------------------------------------------------------------------
+#Perform component separation on simulated noise + only CMB (no foregrounds)
+#---------------------------------------------------------------------------
+./scripts/modify_parfile -f ${PARFILE_RUN} -out ${PARFILE_RUN}.CMB "-do_compsep_on_simulated_component" 0
+${EXEC} miramare_estamp ${PARFILE_RUN}.CMB ${SUFFIX}

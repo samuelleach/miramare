@@ -1,0 +1,108 @@
+# Config file for franklin, using PGI compilers,
+# Cray libsci for blas/lapack, and CFITSIO from
+# the cmb module.  Load cmb module before building.
+# Verify (module list) that the "PGI" PrgEnv module
+# is loaded.
+
+
+# =============== Installation ===================
+
+# Final install location.  This defaults to a
+# subdirectory of the top-level directory called
+# install_$COMMANDER.
+#export INSTALL := /usr/local
+
+
+# =============== System Tools ===================
+
+# The defaults should be fine for any normal
+# GNU/Linux operating system...
+
+# Here you can override the make version to use
+#export MAKE := gmake
+
+# How to make a tar.gz file
+#export CTAR := tar czvf
+
+# The archive command
+export AR := ar
+
+# Archive options to create a library
+export ARFLAGS := crv
+
+# The ranlib command
+#export RANLIB := ranlib
+
+
+# ================= Compilers ====================
+
+# Serial Fortran 90 compiler.  Default is "f90".
+export F90 := ftn $(LAPACK)
+
+# MPI Fortran 90 compiler.  Default is "mpif90".
+export MPF90 := ftn $(LAPACK)
+#-DMPIPIX -DMPI
+
+# MPI Fortran 77 compiler.  Default is "mpif77".
+export MPF77 := ftn
+
+# MPI C compiler.  Default is "mpicc".
+export MPCC := cc
+
+
+# =========== Compiler Optimizations =============
+
+# Fortran 90 compiler flags
+#export F90FLAGS := -O3 -fastsse -fPIC -Mcache_align -DpgiFortran \
+	-DESCAPEBACKSLASH
+export F90FLAGS := -DESCAPEBACKSLASH -fPIC -Mcache_align -fastsse
+
+# Fortran 77 compiler flags
+#export FFLAGS := -O3 -fastsse -fPIC -Mcache_align -DpgiFortran
+export FFLAGS := -DESCAPEBACKSLASH -fPIC -Mcache_align -fastsse
+
+# C compiler flags.
+export CFLAGS := -O3 -fastsse -fPIC -Mcache_align -DpgiFortran
+
+# Extra flags used for linking
+export LDFLAGS := -lm
+
+
+# ============== Fortran Features ================
+
+# Set this variable to 1 if the fortran compiler
+# produces module files with capitalization (*.MOD)
+# instead of lowercase (*.mod).
+#export FORTRAN_UPPER := 1
+
+
+# =============== CFITSIO Linking ================
+
+# The include and linking commands for cfitsio.
+#export CFITSIO_INCLUDE := $(shell cmbconfig --lang MPF90 --incl cfitsio)
+#export CFITSIO_LINK := $(shell cmbconfig --lang MPF90 --lflags --libs cfitsio)
+export CFITSIO_INCLUDE := -I/u0/k/kisner/software/cmb/2.3.1/cfitsio_3.0.6-2.3.1/include
+export CFITSIO_LINK := -L/u0/k/kisner/software/cmb/2.3.1/cfitsio_3.0.6-2.3.1/lib  -lcfitsio
+
+
+# =============== LAPACK Linking =================
+
+# libsci is linked automatically by the ftn/cc compiler
+# wrappers.  No additional linking is required.
+#export LAPACK_INCLUDE := $(shell cmbconfig --lang MPF90 --incl lapack) 
+#export LAPACK_LINK := $(shell cmbconfig --lang MPF90 --lflags --libs lapack)
+export LAPACK_INCLUDE :=
+#export LAPACK_LINK := -lm
+export LAPACK_LINK := 
+
+# =============== HEALPIX Linking =================
+
+# The include and linking commands for LAPACK.
+#export HEALPIX_INCLUDE := $(shell cmbconfig --lang MPF90 --incl healpix) 
+#export HEALPIX_LINK := $(shell cmbconfig --lang MPF90 --lflags --libs healpix)
+
+export HEALPIX_LINK := -L/u0/k/kisner/software/cmb/2.3.1/cfitsio_3.0.6-2.3.1/lib -L/u0/k/kisner/software/cmb/2.3.1/healpix_2.10-2.3.1/lib  -mp=nonuma -lhealpix -lcfitsio -lm
+export HEALPIX_INCLUDE := -I/u0/k/kisner/software/cmb/2.3.1/healpix_2.10-2.3.1/include
+
+#export HEALPIX_LINK := -L/u0/k/kisner/software/cmb/2.3-dev_r2051/healpix_2.11_20081113-2.3-dev_r2051/lib -mp=nonuma -lhealpix
+#export HEALPIX_LINK := -L/u0/k/kisner/software/cmb/2.3-dev_r2051/healpix_2.11_20081113-2.3-dev_r2051/include

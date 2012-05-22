@@ -1,0 +1,6 @@
+verbose       = T
+lmax          = 550
+lmax_sum      = 100
+c_beta        = 0.01
+c_foreground  = 0.01
+c_noise       = 0.01

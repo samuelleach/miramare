@@ -1,0 +1,7 @@
+infile  = ./data/wmap/wmap_da_iqumap_r9_7yr_K1_v4.fits
+outfile = !./data/wmap/add_white_noise_wmap_da_iqumap_r9_7yr_K1_v4.fits
+
+noise_seed = 200
+noise_rms = 0.01
+
+verbose = T

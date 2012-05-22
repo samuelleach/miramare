@@ -1,0 +1,11 @@
+simul_type =            1
+infile = data/wmap/wmap_iqumap_r9_7yr_K1_v4.fits
+nlmax =          512
+regression =            0
+theta_cut_deg =   0.000000000000000E+000
+iter_order =            0
+plmfile = ''
+fwhm_arcmin =    60
+beam_file = ''
+outfile = !data/wmap/smoothing_wmap_iqumap_r9_7yr_K1_v4.fits
+won =            0

@@ -1,0 +1,7 @@
+verbose = T
+infile = output_150GHz.fits
+outfile = !output_150GHz_512.fits
+weightformat = 2
+weightfile = 
+outweightfile = 
+nside = 512

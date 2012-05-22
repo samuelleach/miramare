@@ -1,0 +1,122 @@
+# Config file for a generic GCC based compile,
+# Using the reference LAPACK/Blas and assuming
+# both LAPACK and CFITSIO are in /usr/local.
+
+
+# =============== Installation ===================
+
+# Final install location.  This defaults to a
+# subdirectory of the top-level directory called
+# install_$COMMANDER.
+#export INSTALL := /usr/local
+
+
+# =============== System Tools ===================
+
+# The defaults should be fine for any normal
+# GNU/Linux operating system...
+
+# Here you can override the make version to use
+#export MAKE := gmake
+
+# How to make a tar.gz file
+#export CTAR := tar czvf
+
+# The archive command
+#export AR := ar
+
+# Archive options to create a library
+#export ARFLAGS := crv
+
+# The ranlib command
+export RANLIB := ranlib
+
+
+# ================= Compilers ====================
+
+# Serial Fortran 90 compiler.  Default is "f90".
+#export F90 := gfortran44 -D__GFORTRAN__ -ffixed-line-length-none -ffree-line-length-none
+export F90 := ifort
+
+# MPI Fortran 90 compiler.  Default is "mpif90".
+#export MPF90 := gfortran44  -D__GFORTRAN__ -fopenmp -ffixed-line-length-none -ffree-line-length-none
+export MPF90 := ifort
+#export MPF90 := mpiifort -DMPI -DMPIPIX -DSTAMINA
+#-DOPENMP
+
+# MPI Fortran 77 compiler.  Default is "mpif77".
+export MPF77 := cc
+
+# MPI C compiler.  Default is "mpicc".
+export MPCC := cc
+
+
+# =========== Compiler Optimizations =============
+
+# Fortran 90 compiler flags
+#export F90FLAGS := -openmp
+#export F90FLAGS := -D__GFORTRAN__ -ffixed-line-length-none -ffree-line-length-none -fopenmp
+export F90FLAGS :=   -ip -W0 -WB -fpp -vec_report0 -traceback\
+       -warn all -DTHREEJ
+#-O3
+#-pg
+#-openmp
+
+# Fortran 77 compiler flags
+#export FFLAGS := -ffixed-line-length-none -ffree-line-length-none -fopenmp -D__GFORTRAN__ -O3
+export FFLAGS := 
+
+# C compiler flags.
+export CFLAGS :=
+
+# Extra flags used for linking
+export LDFLAGS := -lm
+
+# ============== Fortran Features ================
+
+# Set this variable to 1 if the fortran compiler
+# produces module files with capitalization (*.MOD)
+# instead of lowercase (*.mod).
+#export FORTRAN_UPPER := 1
+
+
+# =============== CFITSIO Linking ================
+
+# The include and linking commands for cfitsio.
+export CFITSIO_INCLUDE := 
+export CFITSIO_LINK := -L/data/curly/bao/cfitsio -lcfitsio
+#export CFITSIO_LINK := -L/home/user1/gold/cfitsio -lcfitsio
+#-L/usr/lib/gcc/x86_64-redhat-linux/3.4.6/ -lg2c
+
+
+# =============== LAPACK Linking =================
+
+# The include and linking commands for LAPACK.
+export LAPACK_INCLUDE := 
+#export LAPACK_LINK := -L/opt/intel/impi/3.2.2.006/lib64/ -lmpiif\
+#       -L/opt/intel/mkl/10.2.3.029/lib/em64t/  -lmkl_lapack95_lp64 -lguide -lmkl_core\
+#       -lmkl_solver_lp64 -lmkl_intel_thread\
+#       -lmkl_gf_lp64 -lpthread -liomp5
+
+#mkl_lapack
+
+#export LAPACK_LINK := -L/usr/opt/scisoft/lib -llapack
+#export LAPACK_LINK := -L/usr/lib -llapack
+export LAPACK_LINK := -L/data/curly/bao/intel/mkl/lib/intel64/  -lmkl_lapack95_lp64 -lmkl_core\
+	-lmkl_solver_lp64 -lmkl_intel_thread -lmkl_gf_lp64 -lpthread -liomp5
+
+
+# =============== HEALPIX Linking =================
+
+# The include and linking commands for LAPACK.
+#export HEALPIX_INCLUDE := -I/home/leach/healpix/Healpix_2.13a_intel/include
+#export HEALPIX_LINK := -L/home/leach/healpix/Healpix_2.13a_intel/lib/ -lhealpix
+export HEALPIX_INCLUDE := -I/home/grad/bao/healpix/Healpix_2.11/include_ifort
+export HEALPIX_LINK := -L/home/grad/bao/healpix/Healpix_2.11/lib_ifort  -lhealpix
+#export HEALPIX_INCLUDE := -I/home/user1/gold/Healpix_2.15a/include
+#export HEALPIX_LINK := -L/home/user1/gold/Healpix_2.15a/lib -lhealpix
+
+#================ MPI linking =================
+
+export MPI_INCLUDE := -I/usr/lib64/openmpi/1.4-gcc/include
+export MPI_LINK := -L/usr/lib64/openmpi/1.4-gcc/lib -lmpi

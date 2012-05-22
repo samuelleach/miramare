@@ -1,0 +1,7 @@
+verbose = T
+infile = data/pixelmatrices/testsim_inoise_1024_cmb_1.fits
+outfile = !data/pixelmatrices/testsim_inoise_1024_cmb_1_128.fits
+weightformat = 3
+weightfile =  data/pixelmatrices/megarun_matrix_madam_030GHz_nside1024_v3.fits
+outweightfile = data/pixelmatrices/megarun_matrix_madam_030GHz_nside1024_v3_128.fits
+nside = 128

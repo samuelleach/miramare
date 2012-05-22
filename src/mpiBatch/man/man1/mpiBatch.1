@@ -1,0 +1,51 @@
+.TH mpiBatch 1 "September 30 2003"
+
+.SH NAME
+mpiBatch - Combines a series of shell commands into a single parallel job
+
+.SH SYNOPSIS
+.B mpiBatch
+.I cmdFile
+
+.SH DESCRIPTION
+This is a MPI utility that will read a list of shell commands 
+and execute each command on a different processor.  The list of 
+shell commands is given to the program by way of the 
+.I cmdFile. 
+Each MPI task will invoke a shell and execute a unique line
+in the command file.  Empty lines, and lines which begin with 
+the character "#" will be ignored.  If there are more commands 
+than MPI tasks, then only the first commands will be executed.  
+If there are fewer commands than MPI tasks the some processors
+will be idle.  
+
+It is important to note, that for proper load balancing 
+each command in the file should take approximately the same amount 
+of execution time, as none of the CPU resources will be freed
+up until all of the tasks have completed.  
+
+The standard output of each of the tasks is piped to a file 
+which has the following naming convention:
+.I cmdFile_taskID.log
+where 
+.I cmdFile
+is the name of the command file, and taskID is the rank of the 
+MPI task which executes the comand.  
+
+
+.SH COPYRIGHT
+Copyright (C) 2003  Christopher M. Cantalupo
+.PP
+mpiBatch is free software; you can redistribute them and/or modify
+them under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.  
+.PP
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+GNU General Public License for more details.  
+.PP
+Christopher Cantalupo <cmc@nersc.gov>
+.PP
+Send bug reports or comments to the above address.

@@ -1,0 +1,67 @@
+-------------------------- Messaggio originale ---------------------------
+Oggetto: code sqmatrix
+Da:      "Elina Keihanen" <elina.keihanen@helsinki.fi>
+Data:    Lun, 14 Gennaio 2008 12:01 pm
+A:       sara.ricciardi@oapd.inaf.it
+Cc:      anna.bonaldi@oapd.inaf.it
+        "Sam Leach" <leach@sissa.it>
+        "Poutanen, Torsti" <torsti.poutanen@helsinki.fi>
+        "Hannu" <hannu.kurki-suonio@helsinki.fi>
+--------------------------------------------------------------------------
+
+Dear Sara,
+
+here you have the code we were talking about.
+First you must define the fortran compiler and
+the path to the cfitsio library in Makefile.
+To compile, type make.
+
+To use the code, type
+
+./sqmatrix file_in file_out
+
+where file_in is the input matrix file and file_out is the output file.
+
+The code computes through eigenvalue decomposition the matrix square root of
+matrix N such that A^T*A=N, where N is the inverse of the input matrix, and
+stores it in single precision.
+
+There are several ways of constructing a matrix A which fulfills the
+condition A^T*A=N.
+Different solutions for A lead do different realizations of the noise map,
+but all of them have the same statistical properties. The solution chosen
+here is symmetric. This has the benefit that the matrix may be stored in 6
+columns.
+
+To generate a noise map, construct matrix A as
+A = c(1) c(2) c(3)
+   c(2) c(4) c(5)
+   c(3) c(5) c(6)
+where c(1)...c(6) are the six elements stored in the output file. Then
+generate, for each pixel, a vector of three independent gaussian variates.
+Finally, multiply the vector by matrix A ,to have the noise in maps T,Q,U,
+in this order.
+
+If you need a noise estimate, you may construct matrix N as A^T*A. The
+diagonal elements of N give the noise rms squared in the three maps.
+Off-diagonal elements give the correlation between the components.
+
+If you still run out of memory, you may choose to work at lower resolution.
+You may then give the output resolution as a third parameter, for instance
+
+./sqmatrix megarun_matrix_madam_100GHz_nside2048_v4.fits sq512.fits nside=512
+
+The code first degrades the input matrix, then performs the eigenvalue
+analysis.
+If the resolution parameter is left out, the code will compute the output at
+the resolution of the input matrix.
+
+In case the input matrix is singular, the code will put the special value
+1.e30 in each of the 6 columns. Another special value, -1.e30 is reserved
+for pixels where the input matrix has negative eigenvalues. This should
+never happen, so if it does, it may indicate a problem. The code will
+display a warning if this happens.
+
+Let me know if the code works as expected.
+
+Elina

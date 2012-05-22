@@ -1,0 +1,66 @@
+
+
+
+     mmmmppppiiiiBBBBaaaattttcccchhhh((((1111))))	    ((((SSSSeeeepppptttteeeemmmmbbbbeeeerrrr 33330000 2222000000003333))))		   mmmmppppiiiiBBBBaaaattttcccchhhh((((1111))))
+
+
+
+     NNNNAAAAMMMMEEEE
+	  mpiBatch - Combines a	series of shell	commands into a	single
+	  parallel job
+
+
+     SSSSYYYYNNNNOOOOPPPPSSSSIIIISSSS
+	  mmmmppppiiiiBBBBaaaattttcccchhhh _c_m_d_F_i_l_e
+
+
+     DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN
+	  This is a MPI	utility	that will read a list of shell
+	  commands and execute each command on a different processor.
+	  The list of shell commands is	given to the program by	way of
+	  the _c_m_d_F_i_l_e. Each MPI	task will invoke a shell and execute a
+	  unique line in the command file.  Empty lines, and lines
+	  which	begin with the character "#" will be ignored.  If
+	  there	are more commands than MPI tasks, then only the	first
+	  commands will	be executed. If	there are fewer	commands than
+	  MPI tasks the	some processors	will be	idle.
+
+	  It is	important to note, that	for proper load	balancing each
+	  command in the file should take approximately	the same
+	  amount of execution time, as none of the CPU resources will
+	  be freed up until all	of the tasks have completed.
+
+	  The standard output of each of the tasks is piped to a file
+	  which	has the	following naming convention:
+	  _c_m_d_F_i_l_e__t_a_s_k_I_D._l_o_g where _c_m_d_F_i_l_e is the name of the command
+	  file,	and taskID is the rank of the MPI task which executes
+	  the comand.
+
+
+
+     CCCCOOOOPPPPYYYYRRRRIIIIGGGGHHHHTTTT
+	  Copyright (C)	2003  Christopher M. Cantalupo
+
+	  mpiBatch is free software; you can redistribute them and/or
+	  modify them under the	terms of the GNU General Public
+	  License as published by the Free Software Foundation;	either
+	  version 2 of the License, or (at your	option)	any later
+	  version.
+
+	  This program is distributed in the hope that it will be
+	  useful, but WITHOUT ANY WARRANTY; without even the implied
+	  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+	  PURPOSE.  See	the GNU	General	Public License for more
+	  details.
+
+	  Christopher Cantalupo	<cmc@nersc.gov>
+
+	  Send bug reports or comments to the above address.
+
+
+
+
+     Page 1					    (printed 11/18/03)
+
+
+

@@ -1,0 +1,12 @@
+-------------------------
+Installation instructions
+-------------------------
+
+1) Set your MIRAMARE environment flag in your .bashrc file. This is needed
+to select the right compile flags in the Makefile, as specified in the config/
+directory.
+eg. On franklin at NERSC set:
+
+export MIRAMARE=franklin
+
+2) Run 'make'

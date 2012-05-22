@@ -1,0 +1,124 @@
+# Example config file showing all possible options
+# Unspecified options will be assigned a default
+# which will not necessarily work for your system!
+
+
+# =============== Installation ===================
+
+# Final install location.  This defaults to a
+# subdirectory of the top-level directory called
+# install_$COMMANDER.
+#export INSTALL := /usr/local
+
+
+# =============== System Tools ===================
+
+# The defaults should be fine for any normal
+# GNU/Linux operating system...
+
+# Here you can override the make version to use
+#export MAKE := gmake
+
+# How to make a tar.gz file
+#export CTAR := tar czvf
+
+# The archive command
+export AR := ar
+
+# Archive options to create a library
+export ARFLAGS := crv
+
+# The ranlib command
+export RANLIB := ranlib
+
+
+# ================= Compilers ====================
+
+# Serial Fortran 90 compiler.  Default is "f90".
+#export F90 := $(shell cmbconfig --comp --lang MPIF90)
+#export F90 := $(shell cmbconfig --comp --lang F90) -D__GFORTRAN__
+export F90 := /opt/OM_1/modules-3.2.6/idis_modules/openmpi/1.3.3/bin/mpif90
+
+# MPI Fortran 90 compiler.  Default is "mpif90".
+export MPF90 := /opt/OM_1/modules-3.2.6/idis_modules/openmpi/1.3.3/bin/mpif90 -D__GFORTRAN__ -fopenmp -DMPI -DMPIPIX
+
+# MPI Fortran 77 compiler.  Default is "mpif77".
+export MPF77 := mpif77
+
+# MPI C compiler.  Default is "mpicc".
+#export MPCC := $(shell cmbconfig --comp --lang MPIC)
+export MPCC := mpiCC
+
+
+# =========== Compiler Optimizations =============
+
+# Fortran 90 compiler flags
+export F90FLAGS :=  -D__GFORTRAN__ -fopenmp -ffixed-line-length-none -ffree-line-length-none  -O3
+
+
+# Fortran 77 compiler flags
+export FFLAGS :=   -D__GFORTRAN__ -fopenmp -O3
+
+# C compiler flags.
+export CFLAGS := 
+
+# Extra flags used for linking
+export LDFLAGS := 
+
+
+# ============== Fortran Features ================
+
+# Set this variable to 1 if the fortran compiler
+# produces module files with capitalization (*.MOD)
+# instead of lowercase (*.mod).
+#export FORTRAN_UPPER := 1
+
+
+# =============== CFITSIO Linking ================
+
+# The include and linking commands for cfitsio.
+#export CFITSIO_INCLUDE := $(shell cmbconfig --lang MPIF90 --incl cfitsio)
+#export CFITSIO_LINK := $(shell cmbconfig --lang MPIF90 --lflags --libs cfitsio)
+#export CFITSIO_INCLUDE := -I/scisoft/cfitsio/include 
+#export CFITSIO_LINK := -L/scisoft/cfitsio/lib/ -lcfitsio
+#export CFITSIO_INCLUDE := -I/lfi_dpc_test/planck_soft/cfitsio/include 
+#export CFITSIO_LINK := -L/lfi_dpc_test/planck_soft/cfitsio/lib/ -lcfitsio
+#export CFITSIO_INCLUDE := -I/opt/exp_soft/planck_soft/OM_1/IDIS/LevelS/linux_ic8/include
+#export CFITSIO_LINK := -L/opt/exp_soft/planck_soft/OM_1/IDIS/LevelS/linux_ic8/lib -lcfitsio\
+#	-L/usr/lib/gcc-lib/i386-redhat-linux/3.2.3 -lg2c
+#export CFITSIO_INCLUDE := -I/lfi_dpc_test/leach/cfitsio/include 
+#export CFITSIO_LINK := -L/lfi_dpc_test/leach/cfitsio/lib -lcfitsio
+export CFITSIO_INCLUDE := -I/opt/OM_1/cfitsio/include 
+export CFITSIO_LINK := -L/opt/OM_1/cfitsio/lib/ -lcfitsio
+
+
+
+
+# =============== LAPACK Linking =================
+
+# The include and linking commands for LAPACK.
+#export LAPACK_INCLUDE := $(shell cmbconfig --incl lapack)
+#export LAPACK_LINK := $(shell cmbconfig --lflags --libs lapack)
+#export LAPACK_INCLUDE := -I/scisoft/include
+#export LAPACK_LINK := -L/scisoft/lib -llapack -lm -lblas -L/usr/lib/gcc-lib/i386-redhat-linux/3.2.3 -lg2c
+export LAPACK_INCLUDE := -I/usr/include
+export LAPACK_LINK := -L/usr/lib -llapack -lm -lblas -L/usr/lib/gcc-lib/i386-redhat-linux/3.2.3 -lg2c
+
+
+# =============== HEALPIX Linking =================
+
+# The include and linking commands for LAPACK.
+#export HEALPIX_INCLUDE := $(shell cmbconfig --lang MPIF90 --incl healpix)
+#export HEALPIX_LINK := $(shell cmbconfig --lang MPIF90 --lflags --libs healpix)
+#export HEALPIX_INCLUDE := -I/usr/local/Healpix_2.00/include
+#export HEALPIX_LINK := -L/usr/local/Healpix_2.00/lib -lhealpix
+#export HEALPIX_INCLUDE := -I/lfi_dpc_test/planck_soft/Healpix_2.01/include
+#export HEALPIX_LINK := -L/lfi_dpc_test/planck_soft/Healpix_2.01/lib -lhealpix
+#export HEALPIX_INCLUDE := -I/opt/exp_soft/planck_soft/OM_1/IDIS/LevelS/linux_ic8/include
+#export HEALPIX_LINK := -L/opt/exp_soft/planck_soft/OM_1/IDIS/LevelS/linux_ic8/lib -lminihealpix
+#export HEALPIX_INCLUDE := -I/lfi_dpc_test/leach/Healpix_2.11/include
+#export HEALPIX_LINK := -L/lfi_dpc_test/leach/Healpix_2.11/lib -lhealpix -L/lfi_dpc_test/leach/cfitsio/lib/ -lcfitsio
+export HEALPIX_INCLUDE := -I/opt/OM_1/Healpix_2.11/include
+export HEALPIX_LINK := -L/opt/OM_1/Healpix_2.11/lib -lhealpix -L/opt/OM_1/cfitsio/lib/ -lcfitsio
+
+
